@@ -3,15 +3,33 @@ name = "muxwell"
 version = "0.1.0"
 description = "A cli tool for managing MKV files and subtitles with batch operations support."
 readme = "README.md"
-authors = [
-    { name = "Matthieu Daubie", email = "matthieu.daubie@outlook.com" }
-]
+authors = [{ name = "Matthieu Daubie", email = "matthieu.daubie@outlook.com" }]
 license = { file = "LICENSE" }
 requires-python = ">=3.13"
 dependencies = []
 
+[dependency-groups]
+dev = ["black>=26.1.0", "pyright[nodejs]>=1.1.408", "ruff>=0.14.14"]
+
 [project.scripts]
 muxwell = "muxwell:main"
+
+[tool.pyright]
+venv = ".venv"
+venvPath = "."
+typeCheckingMode = "strict"
+
+[tool.ruff]
+line-length = 88 # match Black
+lint.ignore = ["E501"] # line-length handled by Black
+lint.extend-select = [
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+]
+lint.isort.combine-as-imports = true
 
 [build-system]
 requires = ["uv_build>=0.9.27,<0.10.0"]
