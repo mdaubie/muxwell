@@ -10,5 +10,6 @@
 
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
-  }
+  },
+  "python.analysis.importFormat": "relative"
 }
