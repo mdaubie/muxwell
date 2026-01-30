@@ -1,0 +1,18 @@
+[project]
+name = "muxwell"
+version = "0.1.0"
+description = "A cli tool for managing MKV files and subtitles with batch operations support."
+readme = "README.md"
+authors = [
+    { name = "Matthieu Daubie", email = "matthieu.daubie@outlook.com" }
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+muxwell = "muxwell:main"
+
+[build-system]
+requires = ["uv_build>=0.9.27,<0.10.0"]
+build-backend = "uv_build"
