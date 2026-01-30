@@ -2,6 +2,8 @@ import typer
 
 from muxwell import __version__
 
+from .info import info
+
 app = typer.Typer(
     name="muxwell",
     help="A command-line tool for managing MKV files and subtitles with batch operations support.",
@@ -23,3 +25,12 @@ def main(
 ):
     """Muxwell: A command-line tool for managing MKV files and subtitles with batch operations support."""
     pass
+
+
+app.command(help="Show info about video file(s).")(info)
+
+
+@app.command(hidden=True)
+def secret():
+    """Hidden command to force typer to display info as command instead of app."""
+    raise NotImplementedError()
