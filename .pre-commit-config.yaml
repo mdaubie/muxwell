@@ -6,12 +6,20 @@ repos:
     hooks:
       - id: ruff-check
         args: [--fix]
+        stages: [pre-commit]
   - repo: https://github.com/psf/black-pre-commit-mirror
     rev: 26.1.0
     hooks:
       - id: black
         language_version: python3.13
+        stages: [pre-commit]
   - repo: https://github.com/RobertCraigie/pyright-python
     rev: v1.1.408
     hooks:
       - id: pyright
+        stages: [pre-commit]
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.12.1
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]

@@ -9,7 +9,12 @@ requires-python = ">=3.13"
 dependencies = []
 
 [dependency-groups]
-dev = ["black>=26.1.0", "pyright[nodejs]>=1.1.408", "ruff>=0.14.14"]
+dev = [
+    "black>=26.1.0",
+    "commitizen>=4.12.1",
+    "pyright[nodejs]>=1.1.408",
+    "ruff>=0.14.14",
+]
 
 [project.scripts]
 muxwell = "muxwell:main"
@@ -30,6 +35,14 @@ lint.extend-select = [
     "SIM", # flake8-simplify
 ]
 lint.isort.combine-as-imports = true
+
+
+[tool.commitizen]
+version_provider = "uv"
+version_files = ["src/muxwell/__init__.py", "pyproject.toml:version"]
+tag_format = "v$version"
+update_changelog_on_bump = true
+breaking_change_exclamation_in_title = true
 
 [build-system]
 requires = ["uv_build>=0.9.27,<0.10.0"]
