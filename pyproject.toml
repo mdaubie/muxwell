@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [{ name = "Matthieu Daubie", email = "matthieu.daubie@outlook.com" }]
 license = { file = "LICENSE" }
 requires-python = ">=3.13"
-dependencies = []
+dependencies = ["rich>=14.3.1", "typer>=0.21.1"]
 
 [dependency-groups]
 dev = [
@@ -17,7 +17,7 @@ dev = [
 ]
 
 [project.scripts]
-muxwell = "muxwell:main"
+mw = "muxwell.cli:app"
 
 [tool.pyright]
 venv = ".venv"
@@ -35,6 +35,8 @@ lint.extend-select = [
     "SIM", # flake8-simplify
 ]
 lint.isort.combine-as-imports = true
+# Configure flake8-bugbear to recognize Typer immutable calls
+lint.flake8-bugbear.extend-immutable-calls = ["typer.Argument", "typer.Option"]
 
 
 [tool.commitizen]
