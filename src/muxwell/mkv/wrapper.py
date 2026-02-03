@@ -1,3 +1,4 @@
+import os
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
 from pathlib import Path
@@ -7,6 +8,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 from .models import MKVFile
 
+os.environ["LANG"] = "en_US.UTF-8"  # Ensure consistent language for mkvtoolnix output
 console = Console()
 
 
@@ -30,6 +32,30 @@ class MKVWrapper:
                 return _load_mkv(file_path)
 
             return list(executor.map(load_video, file_paths))
+
+    def mux_videos(self, videos: list[tuple[Path, MKVFile]]) -> list[int]:
+        """Mux multiple MKV files concurrently with progress indication."""
+        with (
+            Progress(console=self.console) as progress,
+            ThreadPoolExecutor() as executor,
+        ):
+
+            def mux_video(arg: tuple[Path, MKVFile]) -> int:
+                path, video = arg
+                id = progress.add_task(f"Muxing {path.name}...", total=100)
+
+                def progress_handler(progress_value: int):
+                    progress.update(id, completed=progress_value)
+
+                code = video.mux(  # pyright: ignore[reportUnknownMemberType]
+                    output_path=path,
+                    progress_handler=progress_handler,
+                )
+                video.file_path.unlink()
+                path.rename(video.file_path)
+                return code
+
+            return list(executor.map(mux_video, videos))
 
 
 @lru_cache(maxsize=32)
