@@ -44,7 +44,7 @@ jobs:
         run: |
           BASE_REF="${GITHUB_BASE_REF:-develop}"
           if git rev-parse --verify "origin/${BASE_REF}" >/dev/null 2>&1; then
-            uv run cz check --rev-range "origin/${BASE_REF}..HEAD"
+            uv run cz -nr 3 check --rev-range "origin/${BASE_REF}..HEAD"
           else
             echo "Base branch origin/${BASE_REF} not found, skipping commitizen check"
           fi
