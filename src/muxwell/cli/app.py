@@ -2,6 +2,7 @@ import typer
 
 from muxwell import __version__
 
+from .apply import apply
 from .info import info
 
 app = typer.Typer(
@@ -28,9 +29,4 @@ def main(
 
 
 app.command(help="Show info about video file(s).")(info)
-
-
-@app.command(hidden=True)
-def secret():
-    """Hidden command to force typer to display info as command instead of app."""
-    raise NotImplementedError()
+app.command(help="Apply changes to video file(s).", no_args_is_help=True)(apply)
