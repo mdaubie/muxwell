@@ -45,6 +45,7 @@ class ProcessingEngine:
                 video=video, output_path=self._compute_output_path(video.file_path)
             )
             for video in mkv_files
+            if video.changed
         ]
 
     def _compute_output_path(self, source: Path) -> Path:
