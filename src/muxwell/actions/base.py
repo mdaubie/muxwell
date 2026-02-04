@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
 
+import typer
 from rich.console import Console
 
 from ..mkv import MKVWrapper
@@ -26,7 +27,10 @@ class ActionContext:
 
     @cached_property
     def video_files(self) -> list[Path]:
-        return collect_video_files(self.target)
+        if videos := collect_video_files(self.target):
+            return videos
+        self.console.print(f"[yellow]No video files found in {self.target}[/yellow]")
+        raise typer.Exit(0)
 
 
 class Action(ABC):
