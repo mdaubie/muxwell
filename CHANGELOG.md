@@ -1,3 +1,9 @@
+## v0.3.0b1 (2026-02-04)
+
+### Fix
+
+- **core**: ensure single video files are properly collected (#6)
+
 ## v0.3.0b0 (2026-02-03)
 
 ### Feat
