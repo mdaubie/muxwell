@@ -1,3 +1,9 @@
+## v0.3.0 (2026-02-04)
+
+### Perf
+
+- **engine**: Mux only modified videos (#2)
+
 ## v0.3.0b1 (2026-02-04)
 
 ### Fix

@@ -1,6 +1,6 @@
 [project]
 name = "muxwell"
-version = "0.3.0b1"
+version = "0.3.0"
 description = "A cli tool for managing MKV files and subtitles with batch operations support."
 readme = "README.md"
 authors = [{ name = "Matthieu Daubie", email = "matthieu.daubie@outlook.com" }]
