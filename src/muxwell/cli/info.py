@@ -21,7 +21,7 @@ def info(
 ):
     """Display information about the specified video file or all video files in the given directory."""
     console = Console(quiet=quiet)
-    files = collect_video_files(target) if target.is_dir() else [target]
+    files = collect_video_files(target)
 
     if not files:
         console.print(f"[yellow]No video files found in {target}[/yellow]")

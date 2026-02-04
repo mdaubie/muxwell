@@ -1,0 +1,50 @@
+name: Check Code Quality
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Check lockfile consistency
+        run: uv lock --check
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Ruff linting
+        run: uv run ruff check .
+
+      - name: Black formatting check
+        run: uv run black --check .
+
+      - name: Pyright type checking
+        run: uv run pyright
+
+      - name: Commitizen check
+        run: |
+          BASE_REF="${GITHUB_BASE_REF:-develop}"
+          if git rev-parse --verify "origin/${BASE_REF}" >/dev/null 2>&1; then
+            uv run cz -nr 3 check --rev-range "origin/${BASE_REF}..HEAD"
+          else
+            echo "Base branch origin/${BASE_REF} not found, skipping commitizen check"
+          fi
