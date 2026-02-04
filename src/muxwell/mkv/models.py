@@ -49,3 +49,8 @@ class MKVFile(PyMKVFile):
                 for track in self.tracks
             ],
         )
+
+    @property
+    def changed(self) -> bool:
+        """Check if the MKV file was modified."""
+        return self.info != self._snapshot
