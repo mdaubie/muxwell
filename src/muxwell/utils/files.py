@@ -1,6 +1,7 @@
 from pathlib import Path
 
 VIDEO_EXTENSIONS = [".mkv", ".mp4", ".m4v", ".avi", ".mov", ".wmv", ".flv"]
+SUBTITLES_EXTENSIONS = [".srt", ".ass", ".ssa"]
 
 
 def collect_files(target: Path, extensions: list[str]) -> list[Path]:
