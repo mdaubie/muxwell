@@ -20,6 +20,7 @@ class ActionContext:
 
     target: Path
     console: Console
+    recursive: bool
 
     @cached_property
     def mkv_wrapper(self) -> MKVWrapper:
@@ -27,7 +28,7 @@ class ActionContext:
 
     @cached_property
     def video_files(self) -> list[Path]:
-        if videos := collect_video_files(self.target):
+        if videos := collect_video_files(self.target, self.recursive):
             return videos
         self.console.print(f"[yellow]No video files found in {self.target}[/yellow]")
         raise typer.Exit(0)

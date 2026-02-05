@@ -5,7 +5,7 @@ from rich.console import Console
 
 from ..actions import Action, AddSubtitlesAction, SetTitleAction, SetTrackLanguageAction
 from ..engine import ProcessingEngine
-from .common import QuietOption
+from .common import QuietOption, RecursiveOption
 from .models import IdLangPair
 
 
@@ -35,6 +35,7 @@ def apply(
         help="Set the language of a specific track in the format <track_id>:<lang>. Can be used multiple times.",
     ),
     quiet: bool = QuietOption,
+    recursive: bool = RecursiveOption,
 ):
     """Process the specified video file or all video files in the given directory."""
     console = Console(quiet=quiet)
@@ -50,7 +51,7 @@ def apply(
         actions.append(SetTrackLanguageAction(track_lang.track_id, track_lang.lang))
 
     engine = ProcessingEngine(console)
-    plans = engine.plan(target, actions)
+    plans = engine.plan(target, actions, recursive)
     if not plans:
         console.print("[yellow]No changes to apply.[/yellow]")
         raise typer.Exit(0)

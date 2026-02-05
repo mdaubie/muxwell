@@ -6,7 +6,7 @@ from rich.table import Table
 
 from ..mkv import MkvInfo, MKVWrapper
 from ..utils.files import collect_video_files
-from .common import QuietOption
+from .common import QuietOption, RecursiveOption
 
 
 def info(
@@ -18,10 +18,11 @@ def info(
         resolve_path=True,
     ),
     quiet: bool = QuietOption,
+    recursive: bool = RecursiveOption,
 ):
     """Display information about the specified video file or all video files in the given directory."""
     console = Console(quiet=quiet)
-    files = collect_video_files(target)
+    files = collect_video_files(target, recursive)
 
     if not files:
         console.print(f"[yellow]No video files found in {target}[/yellow]")
