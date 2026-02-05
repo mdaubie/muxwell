@@ -1,5 +1,7 @@
 """Remove a track from an MKV file."""
 
+from __future__ import annotations
+
 from ..mkv import MKVFile
 from .base import Operation
 

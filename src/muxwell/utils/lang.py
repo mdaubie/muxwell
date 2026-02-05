@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import typer
 from iso639 import Language, LanguageNotFoundError
 

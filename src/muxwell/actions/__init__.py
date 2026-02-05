@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .add_subs import AddSubtitlesAction
 from .base import Action, ActionContext
 from .rem_track import RemoveTrackAction

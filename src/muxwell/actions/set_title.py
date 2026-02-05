@@ -1,5 +1,7 @@
 """Infer title from filename action."""
 
+from __future__ import annotations
+
 from ..operations import SetTitle
 from . import Action, ActionContext
 

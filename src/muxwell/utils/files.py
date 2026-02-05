@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 VIDEO_EXTENSIONS = [".mkv", ".mp4", ".m4v", ".avi", ".mov", ".wmv", ".flv"]

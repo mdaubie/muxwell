@@ -1,5 +1,7 @@
 """Set the language of a specific track in the MKV file."""
 
+from __future__ import annotations
+
 from ..operations import SetTrackLanguage
 from ..utils.lang import normalize_language
 from .base import Action, ActionContext

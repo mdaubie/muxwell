@@ -53,8 +53,10 @@ lint.extend-select = [
     "UP",  # pyupgrade
     "C4",  # flake8-comprehensions
     "SIM", # flake8-simplify
+    "FA",  # flake8-future-annotations
 ]
 lint.isort.combine-as-imports = true
+lint.isort.required-imports = ["from __future__ import annotations"]
 # Configure flake8-bugbear to recognize Typer immutable calls
 lint.flake8-bugbear.extend-immutable-calls = ["typer.Argument", "typer.Option"]
 

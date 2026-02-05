@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .add_subs import AddSubtitles
 from .base import Operation
 from .global_ops import SetTitle
