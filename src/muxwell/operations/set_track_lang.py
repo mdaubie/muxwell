@@ -1,5 +1,7 @@
 """Set track language operation."""
 
+from __future__ import annotations
+
 import typer
 
 from ..mkv import MKVFile

@@ -1,5 +1,7 @@
 """Global operations (affect entire file)."""
 
+from __future__ import annotations
+
 from ..mkv import MKVFile
 from . import Operation
 

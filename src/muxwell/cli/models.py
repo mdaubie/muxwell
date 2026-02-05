@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 import typer
@@ -9,7 +11,7 @@ class IdLangPair:
     lang: str
 
     @classmethod
-    def parse(cls, value: str) -> "IdLangPair":
+    def parse(cls, value: str) -> IdLangPair:
         try:
             track_id_str, lang = value.split(":", 1)
         except ValueError as e:

@@ -1,5 +1,7 @@
 """Add subtitles track operation."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 from pymkv import MKVTrack
