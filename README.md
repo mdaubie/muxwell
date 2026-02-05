@@ -9,14 +9,14 @@ Muxwell is a command-line tool for managing MKV files and subtitles with batch o
 
 ## Installation
 
-Clone the repository
+With pipx:
 
 ```bash
-git clone https://github.com/mdaubie/muxwell.git
+pipx install muxwell
 ```
 
-Install as uv tool
+With uv:
 
 ```bash
-uv tool install ./muxwell
+uv tool install muxwell
 ```
