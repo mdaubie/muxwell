@@ -10,6 +10,7 @@ from ..actions import (
     AddSubtitlesAction,
     RemoveTrackAction,
     SetTitleAction,
+    SetTrackDefaultAction,
     SetTrackLanguageAction,
 )
 from ..engine import ProcessingEngine
@@ -42,6 +43,14 @@ def apply(
         parser=IdLangPair.parse,
         help="Set the language of a specific track in the format <track_id>:<lang>. Can be used multiple times.",
     ),
+    set_default: list[int] = typer.Option(
+        [],
+        help="Set the default flag of a specific track by its ID. Can be used multiple times.",
+    ),
+    unset_default: list[int] = typer.Option(
+        [],
+        help="Unset the default flag of a specific track by its ID. Can be used multiple times.",
+    ),
     rem_track: list[int] = typer.Option(
         [],
         help="Remove a specific track by its ID. Can be used multiple times.",
@@ -65,6 +74,11 @@ def apply(
 
     for track_lang in set_track_lang:
         actions.append(SetTrackLanguageAction(track_lang.track_id, track_lang.lang))
+
+    for track_id in set_default:
+        actions.append(SetTrackDefaultAction(track_id, True))
+    for track_id in unset_default:
+        actions.append(SetTrackDefaultAction(track_id, False))
 
     engine = ProcessingEngine(console)
     plans = engine.plan(target, actions, recursive)
