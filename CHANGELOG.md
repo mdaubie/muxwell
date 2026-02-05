@@ -1,3 +1,10 @@
+## v0.5.0 (2026-02-05)
+
+### Feat
+
+- **core**: add recursive mode (#17)
+- **apply**: add remove track option (#15)
+
 ## v0.4.0 (2026-02-05)
 
 ### Feat
