@@ -13,7 +13,7 @@ from ..actions import (
     SetTrackLanguageAction,
 )
 from ..engine import ProcessingEngine
-from .common import QuietOption
+from .common import QuietOption, RecursiveOption
 from .models import IdLangPair
 
 
@@ -47,6 +47,7 @@ def apply(
         help="Remove a specific track by its ID. Can be used multiple times.",
     ),
     quiet: bool = QuietOption,
+    recursive: bool = RecursiveOption,
 ):
     """Process the specified video file or all video files in the given directory."""
     console = Console(quiet=quiet)
@@ -66,7 +67,7 @@ def apply(
         actions.append(SetTrackLanguageAction(track_lang.track_id, track_lang.lang))
 
     engine = ProcessingEngine(console)
-    plans = engine.plan(target, actions)
+    plans = engine.plan(target, actions, recursive)
     if not plans:
         console.print("[yellow]No changes to apply.[/yellow]")
         raise typer.Exit(0)
