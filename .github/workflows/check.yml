@@ -1,5 +1,8 @@
 name: Check Code Quality
-on: [push]
+on:
+  push:
+    branches:
+      - "**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
