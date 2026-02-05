@@ -5,8 +5,28 @@ description = "A cli tool for managing MKV files and subtitles with batch operat
 readme = "README.md"
 authors = [{ name = "Matthieu Daubie", email = "matthieu.daubie@outlook.com" }]
 license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+keywords = ["mkv", "mkvtoolnix", "subtitles", "video", "batch", "cli"]
 requires-python = ">=3.13"
 dependencies = ["pymkv2>=2.2.0.post1", "rich>=14.3.1", "typer>=0.21.1"]
+
+[project.urls]
+Homepage = "https://github.com/mdaubie/muxwell"
+Repository = "https://github.com/mdaubie/muxwell.git"
+Issues = "https://github.com/mdaubie/muxwell/issues"
+Changelog = "https://github.com/mdaubie/muxwell/blob/develop/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
