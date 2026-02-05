@@ -1,3 +1,14 @@
+## v0.4.0 (2026-02-05)
+
+### Feat
+
+- **apply**: implement set track language operation (#8)
+- **apply**: implement add subtitle operation (#7)
+
+### Fix
+
+- **apply**: validate extension when adding subs (#9)
+
 ## v0.3.0 (2026-02-04)
 
 ### Perf
