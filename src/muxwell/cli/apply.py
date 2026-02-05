@@ -3,9 +3,10 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
-from ..actions import Action, AddSubtitlesAction, SetTitleAction
+from ..actions import Action, AddSubtitlesAction, SetTitleAction, SetTrackLanguageAction
 from ..engine import ProcessingEngine
 from .common import QuietOption
+from .models import IdLangPair
 
 
 def apply(
@@ -28,6 +29,11 @@ def apply(
         readable=True,
         resolve_path=True,
     ),
+    set_track_lang: list[IdLangPair] = typer.Option(
+        [],
+        parser=IdLangPair.parse,
+        help="Set the language of a specific track in the format <track_id>:<lang>. Can be used multiple times.",
+    ),
     quiet: bool = QuietOption,
 ):
     """Process the specified video file or all video files in the given directory."""
@@ -39,6 +45,9 @@ def apply(
 
     for sub_path in add_subs:
         actions.append(AddSubtitlesAction(sub_path))
+
+    for track_lang in set_track_lang:
+        actions.append(SetTrackLanguageAction(track_lang.track_id, track_lang.lang))
 
     engine = ProcessingEngine(console)
     plans = engine.plan(target, actions)

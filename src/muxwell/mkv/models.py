@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from pathlib import Path
+from typing import cast
 
-from pymkv import MKVFile as PyMKVFile
+from pymkv import MKVFile as PyMKVFile, MKVTrack as PyMKVTrack
 
 
 @dataclass
@@ -54,3 +55,10 @@ class MKVFile(PyMKVFile):
     def changed(self) -> bool:
         """Check if the MKV file was modified."""
         return self.info != self._snapshot
+
+    def select_track(self, track_id: int) -> PyMKVTrack | None:
+        """Get a track by its ID."""
+        try:
+            return cast(PyMKVTrack, self.get_track(track_id))
+        except IndexError:
+            return None
