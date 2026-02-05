@@ -24,9 +24,9 @@ class ProcessingEngine:
         self.mkv_wrapper = MKVWrapper(console)
 
     def _collect_operations(
-        self, target: Path, actions: list[Action]
+        self, target: Path, actions: list[Action], recursive: bool
     ) -> dict[Path, list[Operation]]:
-        context = ActionContext(target, self.console)
+        context = ActionContext(target, self.console, recursive)
         reduced = defaultdict[Path, list[Operation]](list)
 
         for action in actions:
@@ -34,9 +34,11 @@ class ProcessingEngine:
                 reduced[file_path].extend(operations)
         return reduced
 
-    def plan(self, target: Path, actions: list[Action]) -> list[FilePlan]:
+    def plan(
+        self, target: Path, actions: list[Action], recursive: bool
+    ) -> list[FilePlan]:
         """Process the target with the given actions."""
-        operations_map = self._collect_operations(target, actions)
+        operations_map = self._collect_operations(target, actions, recursive)
         mkv_files = self.mkv_wrapper.load_videos(list(operations_map.keys()))
 
         for mkv_file in mkv_files:
