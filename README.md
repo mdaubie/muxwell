@@ -10,7 +10,7 @@ Muxwell is a command-line tool for managing MKV files and subtitles with batch o
 
 ## Prerequisites
 
-- Python 3.13 or higher
+- Python 3.10 or higher
 - [MKVToolNix](https://mkvtoolnix.download/)
 
 ## Installation
