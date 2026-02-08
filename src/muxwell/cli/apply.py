@@ -8,6 +8,7 @@ from rich.console import Console
 from ..actions import (
     Action,
     AddSubtitlesAction,
+    InferTitleAction,
     RemoveTrackAction,
     SetTitleAction,
     SetTrackDefaultAction,
@@ -16,6 +17,9 @@ from ..actions import (
 from ..engine import ProcessingEngine
 from .common import QuietOption, RecursiveOption
 from .models import IdLangPair
+from .utils import MutuallyExclusiveGroup
+
+title_excl_cb = MutuallyExclusiveGroup()
 
 
 def apply(
@@ -27,7 +31,15 @@ def apply(
         resolve_path=True,
     ),
     set_title: str | None = typer.Option(
-        None, "--set-title", help="Set the title of the MKV file."
+        None,
+        "--set-title",
+        callback=title_excl_cb,
+        help="Set the title of the MKV file.",
+    ),
+    infer_title: bool = typer.Option(
+        False,
+        callback=title_excl_cb,
+        help="Infer the title from the filename and set it.",
     ),
     add_subs: list[Path] = typer.Option(
         [],
@@ -64,6 +76,8 @@ def apply(
     actions: list[Action] = []
     if set_title:
         actions.append(SetTitleAction(set_title))
+    if infer_title:
+        actions.append(InferTitleAction())
 
     for sub_path in add_subs:
         actions.append(AddSubtitlesAction(sub_path))
