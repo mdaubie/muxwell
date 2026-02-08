@@ -1,3 +1,10 @@
+## v0.7.0 (2026-02-08)
+
+### Feat
+
+- **apply**: add infer title option (#28)
+- add Python 3.10 and 3.11 support (#26)
+
 ## v0.6.0 (2026-02-06)
 
 ### Feat
