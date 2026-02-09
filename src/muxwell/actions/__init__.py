@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from .add_subs import AddSubtitlesAction
+from .auto_match_subs import AutoMatchSubs
 from .base import Action, ActionContext
 from .infer_title import InferTitleAction
 from .rem_track import RemoveTrackAction
@@ -12,6 +13,7 @@ __all__ = [
     "Action",
     "ActionContext",
     "AddSubtitlesAction",
+    "AutoMatchSubs",
     "InferTitleAction",
     "RemoveTrackAction",
     "SetTitleAction",

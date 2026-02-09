@@ -28,3 +28,8 @@ def collect_files(target: Path, extensions: list[str], recursive: bool) -> list[
 def collect_video_files(target: Path, recursive: bool) -> list[Path]:
     """Collect all video files in the specified directory."""
     return collect_files(target, VIDEO_EXTENSIONS, recursive)
+
+
+def collect_subtitles_files(target: Path, recursive: bool) -> list[Path]:
+    """Collect all subtitles files in the specified directory."""
+    return collect_files(target, SUBTITLES_EXTENSIONS, recursive)
