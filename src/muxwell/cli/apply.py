@@ -8,6 +8,7 @@ from rich.console import Console
 from ..actions import (
     Action,
     AddSubtitlesAction,
+    AutoMatchSubs,
     InferTitleAction,
     RemoveTrackAction,
     SetTitleAction,
@@ -50,6 +51,10 @@ def apply(
         readable=True,
         resolve_path=True,
     ),
+    auto_match_subs: bool = typer.Option(
+        False,
+        help="Automatically match and add subtitles files based on filename similarity.",
+    ),
     set_track_lang: list[IdLangPair] = typer.Option(
         [],
         parser=IdLangPair.parse,
@@ -81,6 +86,8 @@ def apply(
 
     for sub_path in add_subs:
         actions.append(AddSubtitlesAction(sub_path))
+    if auto_match_subs:
+        actions.append(AutoMatchSubs())
 
     # order desc to avoid ID shifting issues
     for track_id in sorted(rem_track, reverse=True):

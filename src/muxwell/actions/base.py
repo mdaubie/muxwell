@@ -13,7 +13,7 @@ from rich.console import Console
 
 from ..mkv import MKVWrapper
 from ..operations import Operation
-from ..utils.files import collect_video_files
+from ..utils.files import collect_subtitles_files, collect_video_files
 
 
 @dataclass
@@ -33,6 +33,15 @@ class ActionContext:
         if videos := collect_video_files(self.target, self.recursive):
             return videos
         self.console.print(f"[yellow]No video files found in {self.target}[/yellow]")
+        raise typer.Exit(0)
+
+    @cached_property
+    def subtitles_files(self) -> list[Path]:
+        if subtitles := collect_subtitles_files(self.target, self.recursive):
+            return subtitles
+        self.console.print(
+            f"[yellow]No subtitles files found in {self.target}[/yellow]"
+        )
         raise typer.Exit(0)
 
 
