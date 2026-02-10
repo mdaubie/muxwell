@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Sequence
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
 from pathlib import Path
@@ -35,7 +36,7 @@ class MKVWrapper:
 
             return list(executor.map(load_video, file_paths))
 
-    def mux_videos(self, videos: list[tuple[Path, MKVFile]]) -> list[int]:
+    def mux_videos(self, videos: Sequence[tuple[Path, MKVFile]]) -> list[int]:
         """Mux multiple MKV files concurrently with progress indication."""
         with (
             Progress(console=self.console) as progress,
@@ -49,13 +50,18 @@ class MKVWrapper:
                 def progress_handler(progress_value: int):
                     progress.update(id, completed=progress_value)
 
-                code = video.mux(  # pyright: ignore[reportUnknownMemberType]
-                    output_path=path,
-                    progress_handler=progress_handler,
-                )
-                video.file_path.unlink()
-                path.rename(video.file_path)
-                return code
+                try:
+                    video.mux(  # pyright: ignore[reportUnknownMemberType]
+                        output_path=path,
+                        progress_handler=progress_handler,
+                    )
+                    video.file_path.unlink()
+                    path.rename(video.file_path)
+                    return 0
+                except ValueError as e:
+                    self.console.print(f"[red]Error muxing {path.name}: {e}[/red]")
+                    path.unlink(missing_ok=True)
+                    return 1
 
             return list(executor.map(mux_video, videos))
 

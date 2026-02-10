@@ -5,11 +5,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import pytest
+from rich.console import Console
 
 if TYPE_CHECKING:
     from pathlib import Path
-
-    from rich.console import Console
 
 
 @pytest.fixture
