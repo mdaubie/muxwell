@@ -42,8 +42,8 @@ class TestApplyCommand:
         assert result.exit_code == 0
         assert result.stdout == ""  # No output in quiet mode
 
-    def test_apply_no_options(self, temp_video_file: Path):
+    def test_apply_no_options(self, video_file: Path):
         """Test apply command with no options."""
-        result = runner.invoke(app, ["apply", str(temp_video_file)])
+        result = runner.invoke(app, ["apply", str(video_file)])
         assert result.exit_code == 0
         assert "No changes to apply" in result.stdout
