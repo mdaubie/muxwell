@@ -27,12 +27,12 @@ def empty_dir_action_ctx(tmp_path: Path) -> ActionContext:
 
 
 @pytest.fixture
-def file_action_ctx(temp_video_file: Path) -> ActionContext:
+def file_action_ctx(video_file: Path) -> ActionContext:
     """Create a mock ActionContext with a file target."""
     context = MagicMock(spec=ActionContext)
-    context.target = temp_video_file
+    context.target = video_file
     context.console = MagicMock(spec=Console)
     context.recursive = False
-    context.video_files = [temp_video_file]
+    context.video_files = [video_file]
     context.subtitles_files = []
     return context
