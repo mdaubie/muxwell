@@ -6,6 +6,7 @@ from muxwell import __version__
 
 from .apply import apply
 from .info import info
+from .subtitles import subtitles
 
 app = typer.Typer(
     name="muxwell",
@@ -32,3 +33,4 @@ def main(
 
 app.command(help="Show info about video file(s).")(info)
 app.command(help="Apply changes to video file(s).", no_args_is_help=True)(apply)
+app.add_typer(subtitles)
