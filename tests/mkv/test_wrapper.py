@@ -23,8 +23,11 @@ class TestMKVWrapper:
     @pytest.mark.parametrize(
         ["video_files"],
         [
-            pytest.param(["existent", "existent"], id="multiple"),
-            pytest.param(["nested"], id="single_nested"),
+            pytest.param(
+                [{"nested": False, "create": True}, {"nested": False, "create": True}],
+                id="multiple",
+            ),
+            pytest.param([{"nested": True, "create": True}], id="single_nested"),
         ],
         indirect=["video_files"],
     )
@@ -39,8 +42,11 @@ class TestMKVWrapper:
     @pytest.mark.parametrize(
         ["video_files"],
         [
-            pytest.param(["unexistent"], id="single_unexistent"),
-            pytest.param(["existent", "unexistent"], id="mixed_existent_unexistent"),
+            pytest.param([{"nested": False, "create": False}], id="single_unexistent"),
+            pytest.param(
+                [{"nested": False, "create": True}, {"nested": False, "create": False}],
+                id="mixed_existent_unexistent",
+            ),
         ],
         indirect=["video_files"],
     )
@@ -55,19 +61,19 @@ class TestMKVWrapper:
         ["video_files", "mkv_file_builders", "expected_result"],
         [
             pytest.param(
-                ["existent", "existent"],
+                [{"nested": False, "create": True}, {"nested": False, "create": True}],
                 ["success", "success"],
                 [0, 0],
                 id="multiple_mux_success",
             ),
             pytest.param(
-                ["nested_existent"],
+                [{"nested": True, "create": True}],
                 ["error"],
                 [1],
                 id="single_nested_mux_fails",
             ),
             pytest.param(
-                ["existent", "existent"],
+                [{"nested": False, "create": True}, {"nested": False, "create": True}],
                 ["success", "error"],
                 [0, 1],
                 id="multiple_mux_partial_failure",
