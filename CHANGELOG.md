@@ -1,3 +1,14 @@
+## v0.8.0 (2026-03-02)
+
+### Feat
+
+- **subtitles**: add command with shift subcommand (#59)
+- **apply**: add auto match subs option (#30)
+
+### Fix
+
+- **apply**: properly handle errors/warnings (#31)
+
 ## v0.7.0 (2026-02-08)
 
 ### Feat
