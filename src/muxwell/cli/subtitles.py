@@ -37,7 +37,7 @@ def shift(
     files = collect_subtitles_files(target, recursive)
 
     if not files:
-        console.print(f"[yellow]No subtitles files found in {target}[/yellow]")
+        console.print(f"[yellow]No subtitle files found in {target}[/yellow]")
         raise typer.Exit(0)
 
     subs = wrapper.load_subtitles(files)

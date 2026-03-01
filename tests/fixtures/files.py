@@ -10,6 +10,8 @@ class FileCreateParams(TypedDict, total=False):
     ext: str
     name: str
     nested: bool
+    content: str
+    encoding: str
     create: bool
 
 
@@ -20,6 +22,8 @@ class FileFactory(Protocol):
         ext: str,
         name: str = "sample",
         nested: bool = False,
+        content: str = "",
+        encoding: str = "utf-8",
         create: bool = True,
     ) -> Path: ...
 
@@ -31,6 +35,8 @@ def file_factory(tmp_path: Path) -> FileFactory:
         ext: str,
         name: str = "sample",
         nested: bool = False,
+        content: str = "",
+        encoding: str = "utf-8",
         create: bool = True,
     ) -> Path:
         base = tmp_path / "nested" if nested else tmp_path
@@ -38,7 +44,7 @@ def file_factory(tmp_path: Path) -> FileFactory:
 
         path = base / f"{name}.{ext.lstrip('.')}"
         if create:
-            path.touch()
+            path.write_text(content, encoding=encoding)
         return path
 
     return _create
