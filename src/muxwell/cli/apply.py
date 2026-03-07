@@ -17,7 +17,7 @@ from ..actions import (
 )
 from ..engine import ProcessingEngine
 from .common import QuietOption, RecursiveOption
-from .models import IdLangPair
+from .models import IdLangPair, TrackSelectorArg
 from .utils import MutuallyExclusiveGroup
 
 title_excl_cb = MutuallyExclusiveGroup()
@@ -58,19 +58,22 @@ def apply(
     set_track_lang: list[IdLangPair] = typer.Option(
         [],
         parser=IdLangPair.parse,
-        help="Set the language of a specific track in the format <track_id>:<lang>. Can be used multiple times.",
+        help=f"Set the language of a specific track in the format {IdLangPair.FORMAT}, (e.g. {IdLangPair.FORMAT_EXAMPLE}). Can be used multiple times.",
     ),
-    set_default: list[int] = typer.Option(
+    set_default: list[TrackSelectorArg] = typer.Option(
         [],
-        help="Set the default flag of a specific track by its ID. Can be used multiple times.",
+        parser=TrackSelectorArg.parse,
+        help=f"Set the default flag of a specific track by its {TrackSelectorArg.FORMAT}, (e.g. {TrackSelectorArg.FORMAT_EXAMPLE}). Can be used multiple times.",
     ),
-    unset_default: list[int] = typer.Option(
+    unset_default: list[TrackSelectorArg] = typer.Option(
         [],
-        help="Unset the default flag of a specific track by its ID. Can be used multiple times.",
+        parser=TrackSelectorArg.parse,
+        help=f"Unset the default flag of a specific track by its {TrackSelectorArg.FORMAT}, (e.g. {TrackSelectorArg.FORMAT_EXAMPLE}). Can be used multiple times.",
     ),
-    rem_track: list[int] = typer.Option(
+    rem_track: list[TrackSelectorArg] = typer.Option(
         [],
-        help="Remove a specific track by its ID. Can be used multiple times.",
+        parser=TrackSelectorArg.parse,
+        help=f"Remove a specific track by its {TrackSelectorArg.FORMAT}, (e.g. {TrackSelectorArg.FORMAT_EXAMPLE}). Can be used multiple times.",
     ),
     quiet: bool = QuietOption,
     recursive: bool = RecursiveOption,
@@ -89,16 +92,16 @@ def apply(
     if auto_match_subs:
         actions.append(AutoMatchSubs())
 
-    for track_id in rem_track:
-        actions.append(RemoveTrackAction(track_id))
+    for ts_arg in rem_track:
+        actions.append(RemoveTrackAction(ts_arg.value))
 
     for track_lang in set_track_lang:
         actions.append(SetTrackLanguageAction(track_lang.track_id, track_lang.lang))
 
-    for track_id in set_default:
-        actions.append(SetTrackDefaultAction(track_id, True))
-    for track_id in unset_default:
-        actions.append(SetTrackDefaultAction(track_id, False))
+    for ts_arg in set_default:
+        actions.append(SetTrackDefaultAction(ts_arg.value, True))
+    for ts_arg in unset_default:
+        actions.append(SetTrackDefaultAction(ts_arg.value, False))
 
     engine = ProcessingEngine(console)
     plans = engine.plan(target, actions, recursive)

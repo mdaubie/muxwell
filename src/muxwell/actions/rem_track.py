@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from ..mkv import TrackSelector
 from ..operations import RemoveTrack
 from .base import Action, ActionContext
 
@@ -9,9 +10,9 @@ from .base import Action, ActionContext
 class RemoveTrackAction(Action):
     """Remove a specific track from the MKV file."""
 
-    def __init__(self, track_id: int):
-        self.track_id = track_id
+    def __init__(self, track_selector: TrackSelector):
+        self.track_selector = track_selector
 
     def analyze(self, context: ActionContext):
-        """Create RemoveTrack operation with the provided track ID."""
-        return {v: [RemoveTrack(self.track_id)] for v in context.video_files}
+        """Create RemoveTrack operation with the provided track selector."""
+        return {v: [RemoveTrack(self.track_selector)] for v in context.video_files}

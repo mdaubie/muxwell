@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from ..mkv import MKVFile
+import typer
+
+from ..mkv import MKVFile, TrackSelector
 from .base import Operation, OperationPriority
 
 
@@ -11,12 +13,21 @@ class RemoveTrack(Operation):
 
     priority = OperationPriority.REMOVE_TRACK
 
-    def __init__(self, track_id: int):
-        self.track_id = track_id
+    def __init__(self, track_selector: TrackSelector):
+        self.track_selector = track_selector
 
-    def tie_breaker(self):
-        # remove tracks in descending order to avoid shifting
-        return (-self.track_id,)
+    def tie_breaker(self) -> tuple[int, ...]:
+        # remove tracks by ID first (descending), then by type/lang selector, to avoid id shifting issues
+        if isinstance(self.track_selector, int):
+            return (0, -self.track_selector)
+        else:
+            return (1,)
 
     def apply(self, video: MKVFile):
-        video.remove_track(self.track_id)
+        track = video.select_track(self.track_selector)
+        if track:
+            video.remove_track(video.tracks.index(track))
+        else:
+            raise typer.BadParameter(
+                f"Track {self.track_selector} not found in file {video.file_path}"
+            )
