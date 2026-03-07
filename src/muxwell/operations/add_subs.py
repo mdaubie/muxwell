@@ -7,11 +7,13 @@ from pathlib import Path
 from pymkv import MKVTrack
 
 from ..mkv import MKVFile
-from .base import Operation
+from .base import Operation, OperationPriority
 
 
 class AddSubtitles(Operation):
     """Add a subtitles track to an MKV file."""
+
+    priority = OperationPriority.ADD_TRACK
 
     def __init__(self, path: Path):
         self.path = path
