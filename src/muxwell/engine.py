@@ -42,7 +42,7 @@ class ProcessingEngine:
         mkv_files = self.mkv_wrapper.load_videos(list(operations_map.keys()))
 
         for mkv_file in mkv_files:
-            for operation in operations_map[mkv_file.file_path]:
+            for operation in sorted(operations_map[mkv_file.file_path]):
                 operation.apply(mkv_file)
         return [
             FilePlan(

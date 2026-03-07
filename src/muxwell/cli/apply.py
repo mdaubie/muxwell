@@ -89,8 +89,7 @@ def apply(
     if auto_match_subs:
         actions.append(AutoMatchSubs())
 
-    # order desc to avoid ID shifting issues
-    for track_id in sorted(rem_track, reverse=True):
+    for track_id in rem_track:
         actions.append(RemoveTrackAction(track_id))
 
     for track_lang in set_track_lang:
