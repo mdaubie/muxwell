@@ -24,6 +24,9 @@ EP_S1E1_SRT = "Breaking.Bad.S01E01.eng.srt"
 EP_S1E2_SUB = "Breaking.Bad.S01E02.eng.srt"
 EP_S2E1_SUB = "Breaking.Bad.S02E01.eng.srt"
 
+AHS_S2E1_VID = "American.Horror.Story.S02E01.1080p.BluRay.x265-n0m1.mkv"
+AHS_S2E1_SUB = "American.horror.story.S02E01.Blu-ray.English-WWW.MY-SUBS.CO.srt"
+
 MULTI_EP_VID = "Friends.S02E01E02.1080p.BluRay.mkv"
 MULTI_EP_SUB = "Friends.S02E01E02.eng.srt"
 
@@ -53,6 +56,11 @@ class TestAutoMatchSubs:
                 [EP_S1E1_VID],
                 [EP_S1E1_SRT],
                 {EP_S1E1_VID: [EP_S1E1_SRT]},
+            ),
+            (  ## TV episode with different casing
+                [AHS_S2E1_VID],
+                [AHS_S2E1_SUB],
+                {AHS_S2E1_VID: [AHS_S2E1_SUB]},
             ),
             (  ## TV Multi-episode
                 [MULTI_EP_VID],
@@ -84,6 +92,7 @@ class TestAutoMatchSubs:
         ids=[
             "matched_movie",
             "matched_tv_episode",
+            "matched_tv_episode_casing",
             "matched_multi_episode",
             "matched_multiple_subs",
             "matched_multiple_videos_subs",

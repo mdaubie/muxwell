@@ -35,7 +35,7 @@ class AutoMatchSubs(Action):
                 matches := [
                     AddSubtitles(sub_path)
                     for sub_path, sub_info in parsed_subs.items()
-                    if sub_info == video_info
+                    if video_info.matches(sub_info)
                 ]
             )
         }
