@@ -3,6 +3,13 @@
 from __future__ import annotations
 
 from .files import file_factory
+from .mkv import (
+    mkv_file_builder,
+    mkv_file_builder_error,
+    mkv_file_builder_success,
+    mkv_file_builders,
+    patch_mkv_file,
+)
 from .subtitles import (
     ass_file,
     invalid_srt_file,
@@ -16,6 +23,11 @@ from .video import video_file, video_files
 
 __all__ = [
     "file_factory",
+    "mkv_file_builder",
+    "mkv_file_builder_error",
+    "mkv_file_builder_success",
+    "mkv_file_builders",
+    "patch_mkv_file",
     "ass_file",
     "invalid_srt_file",
     "nested_srt_files",

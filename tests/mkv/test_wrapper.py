@@ -8,8 +8,7 @@ import pytest
 from rich.console import Console
 
 from muxwell.mkv.wrapper import MKVWrapper
-
-from .conftest import MKVFileBuilder
+from tests.fixtures.mkv import MKVFileBuilder
 
 
 class TestMKVWrapper:
