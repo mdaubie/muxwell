@@ -1,12 +1,96 @@
 version: 2
+
+multi-ecosystem-groups:
+  ruff:
+    schedule:
+      interval: "weekly"
+  black:
+    schedule:
+      interval: "weekly"
+  pyright:
+    schedule:
+      interval: "weekly"
+  commitizen:
+    schedule:
+      interval: "weekly"
+
 updates:
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+
   # Python
+  ## Toolchain deps (synced with pre-commit)
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"
+    patterns:
+      - "ruff"
+    multi-ecosystem-group: "ruff"
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "pyright*"
+    multi-ecosystem-group: "pyright"
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "black"
+    multi-ecosystem-group: "black"
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "commitizen"
+    multi-ecosystem-group: "commitizen"
+
+  ## Other deps
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "*"
+    exclude-patterns:
+      - "ruff"
+      - "black"
+      - "pyright*"
+      - "commitizen"
+
+  # Pre-commit hooks (synced with pre-commit)
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "psf/black-pre-commit-mirror"
+    multi-ecosystem-group: "black"
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "RobertCraigie/pyright-python"
+    multi-ecosystem-group: "pyright"
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "commitizen-tools/commitizen"
+    multi-ecosystem-group: "commitizen"
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    patterns:
+      - "astral-sh/ruff-pre-commit"
+    multi-ecosystem-group: "ruff"
