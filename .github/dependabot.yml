@@ -5,12 +5,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    assignees:
-      - mdaubie
   # Python
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"
-    assignees:
-      - mdaubie
