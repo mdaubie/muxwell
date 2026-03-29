@@ -57,13 +57,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    patterns:
-      - "*"
-    exclude-patterns:
-      - "ruff"
-      - "black"
-      - "pyright*"
-      - "commitizen"
+    ignore:
+      - dependency-name: "ruff"
+      - dependency-name: "black"
+      - dependency-name: "pyright*"
+      - dependency-name: "commitizen"
 
   # Pre-commit hooks (synced with pre-commit)
   - package-ecosystem: "pre-commit"
