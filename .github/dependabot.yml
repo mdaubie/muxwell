@@ -70,28 +70,28 @@ updates:
     schedule:
       interval: "weekly"
     patterns:
-      - "psf/black-pre-commit-mirror"
+      - "*psf/black-pre-commit-mirror*"
     multi-ecosystem-group: "black"
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
       interval: "weekly"
     patterns:
-      - "RobertCraigie/pyright-python"
+      - "*RobertCraigie/pyright-python*"
     multi-ecosystem-group: "pyright"
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
       interval: "weekly"
     patterns:
-      - "commitizen-tools/commitizen"
+      - "*commitizen-tools/commitizen*"
     multi-ecosystem-group: "commitizen"
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
       interval: "weekly"
     patterns:
-      - "astral-sh/ruff-pre-commit"
+      - "*astral-sh/ruff-pre-commit*"
     multi-ecosystem-group: "ruff"
 
   ## Other hooks
@@ -100,7 +100,7 @@ updates:
     schedule:
       interval: "weekly"
     ignore:
-      - dependency-name: "psf/black-pre-commit-mirror"
-      - dependency-name: "RobertCraigie/pyright-python"
-      - dependency-name: "commitizen-tools/commitizen"
-      - dependency-name: "astral-sh/ruff-pre-commit"
+      - dependency-name: "*psf/black-pre-commit-mirror*"
+      - dependency-name: "*RobertCraigie/pyright-python*"
+      - dependency-name: "*commitizen-tools/commitizen*"
+      - dependency-name: "*astral-sh/ruff-pre-commit*"
