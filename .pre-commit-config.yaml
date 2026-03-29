@@ -5,7 +5,9 @@ repos:
     rev: 0.37.1
     hooks:
       - id: check-github-workflows
+        stages: [pre-commit]
       - id: check-dependabot
+        stages: [pre-commit]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.14.14
     hooks:
