@@ -63,7 +63,8 @@ updates:
       - dependency-name: "pyright*"
       - dependency-name: "commitizen"
 
-  # Pre-commit hooks (synced with pre-commit)
+  # Pre-commit hooks
+  ## Toolchain hooks (synced with uv)
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
@@ -92,3 +93,14 @@ updates:
     patterns:
       - "astral-sh/ruff-pre-commit"
     multi-ecosystem-group: "ruff"
+
+  ## Other hooks
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "psf/black-pre-commit-mirror"
+      - dependency-name: "RobertCraigie/pyright-python"
+      - dependency-name: "commitizen-tools/commitizen"
+      - dependency-name: "astral-sh/ruff-pre-commit"
