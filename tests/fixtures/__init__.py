@@ -9,6 +9,7 @@ from .mkv import (
     mkv_file_builder_success,
     mkv_file_builders,
     patch_mkv_file,
+    patch_mkv_track,
 )
 from .subtitles import (
     ass_file,
@@ -28,6 +29,7 @@ __all__ = [
     "mkv_file_builder_success",
     "mkv_file_builders",
     "patch_mkv_file",
+    "patch_mkv_track",
     "ass_file",
     "invalid_srt_file",
     "nested_srt_files",
