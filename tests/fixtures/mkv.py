@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
+from typing import Protocol
 from unittest.mock import MagicMock
 
 import pytest
@@ -11,7 +12,15 @@ from pytest import FixtureRequest
 
 from muxwell.mkv import MKVFile
 
-MKVFileBuilder = Callable[[Path], MKVFile]
+
+class MKVFileBuilder(Protocol):
+    def __call__(
+        self,
+        filepath: Path,
+        tracks: list[MKVTrack] | None = None,
+    ) -> MKVFile: ...
+
+
 MuxMock = Callable[[Path, Callable[[int], None]], int]
 
 
@@ -31,8 +40,12 @@ def _mux_error(output_path: Path, progress_handler: Callable[[int], None]) -> in
 def _create_mkv_builder(mux_mock: MuxMock) -> MKVFileBuilder:
     """Create a builder function that constructs mocked MKVFile instances."""
 
-    def _builder(filepath: Path) -> MKVFile:
+    def _builder(filepath: Path, tracks: list[MKVTrack] | None = None) -> MKVFile:
         real_mkv = MKVFile(filepath)
+        if tracks is not None:
+            real_mkv.tracks.extend(tracks)
+            real_mkv._number_file = len(real_mkv.tracks)
+            real_mkv._snapshot = real_mkv.info
         real_mkv.mux = MagicMock(side_effect=mux_mock)
         return real_mkv
 
@@ -125,3 +138,17 @@ def patch_mkv_track(monkeypatch: pytest.MonkeyPatch):
         self.forced_track = False
 
     monkeypatch.setattr("tests.fixtures.mkv.MKVTrack.__init__", _patched_init)
+
+
+@pytest.fixture
+def mkv_file(video_file: Path) -> MKVFile:
+    return MKVFile(video_file)
+
+
+@pytest.fixture
+def mkv_file_with_subs(
+    video_file: Path,
+    subs_file: Path,
+    mkv_file_builder: MKVFileBuilder,
+) -> MKVFile:
+    return mkv_file_builder(video_file, tracks=[MKVTrack(subs_file.as_posix())])
