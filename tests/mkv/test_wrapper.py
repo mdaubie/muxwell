@@ -8,8 +8,7 @@ import pytest
 from rich.console import Console
 
 from muxwell.mkv.wrapper import MKVWrapper
-
-from .conftest import MKVFileBuilder
+from tests.fixtures.mkv import MKVFileBuilder
 
 
 class TestMKVWrapper:
@@ -106,7 +105,7 @@ class TestMKVWrapper:
         result = wrapper.mux_videos(videos)
         assert result == expected_result
         for output_path, video in videos:
-            video.mux.assert_called_once()
+            video.mux.assert_called_once()  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
             # Success: output renamed to input, Error: output cleaned up
             assert not output_path.exists()
             # Success: input now has muxed content, Error: input unchanged
