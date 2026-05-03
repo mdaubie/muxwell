@@ -27,6 +27,12 @@
       "matchPackageNames": ["commitizen", "commitizen-tools/commitizen"],
       "groupName": "dev-tooling: commitizen",
       "groupSlug": "dev-tooling-commitizen"
+    },
+    {
+      "description": "Force uv constraint bumps for dev tooling",
+      "matchManagers": ["pep621"],
+      "matchPackageNames": ["black", "ruff", "pyright", "commitizen"],
+      "rangeStrategy": "bump"
     }
   ]
 }
