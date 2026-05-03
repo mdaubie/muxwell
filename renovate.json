@@ -2,5 +2,31 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "pre-commit": { "enabled": true },
-  "lockFileMaintenance": { "enabled": true }
+  "lockFileMaintenance": { "enabled": true },
+  "packageRules": [
+    {
+      "description": "Sync black across uv and pre-commit",
+      "matchPackageNames": ["black", "psf/black-pre-commit-mirror"],
+      "groupName": "dev-tooling: black",
+      "groupSlug": "dev-tooling-black"
+    },
+    {
+      "description": "Sync ruff across uv and pre-commit",
+      "matchPackageNames": ["ruff", "astral-sh/ruff-pre-commit"],
+      "groupName": "dev-tooling: ruff",
+      "groupSlug": "dev-tooling-ruff"
+    },
+    {
+      "description": "Sync pyright across uv and pre-commit",
+      "matchPackageNames": ["pyright", "RobertCraigie/pyright-python"],
+      "groupName": "dev-tooling: pyright",
+      "groupSlug": "dev-tooling-pyright"
+    },
+    {
+      "description": "Sync commitizen across uv and pre-commit",
+      "matchPackageNames": ["commitizen", "commitizen-tools/commitizen"],
+      "groupName": "dev-tooling: commitizen",
+      "groupSlug": "dev-tooling-commitizen"
+    }
+  ]
 }
