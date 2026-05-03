@@ -74,12 +74,30 @@ lint.flake8-bugbear.extend-immutable-calls = ["typer.Argument", "typer.Option"]
 
 
 [tool.commitizen]
+name = "cz_customize"
 version_provider = "uv"
 version_files = ["src/muxwell/__init__.py", "pyproject.toml:version"]
 tag_format = "v$version"
 update_changelog_on_bump = true
 breaking_change_exclamation_in_title = true
 gpg_sign = true
+
+[tool.commitizen.customize]
+commit_parser = "^(?P<change_type>feat|fix|refactor|perf|docs|style|test|build|ci|chore|revert)(?:\\((?P<scope>[^()\r\n]*)\\)|\\()?(?P<breaking>!)?:\\s(?P<message>.*)?"
+changelog_pattern = "^(feat|fix|refactor|perf|BREAKING CHANGE)(\\(.+\\))?!?:"
+change_type_order = [
+    "BREAKING CHANGE",
+    "Features",
+    "Bug Fixes",
+    "Refactoring",
+    "Performance Improvements",
+]
+
+[tool.commitizen.customize.change_type_map]
+"feat" = "Features"
+"fix" = "Bug Fixes"
+"refactor" = "Refactoring"
+"perf" = "Performance Improvements"
 
 [tool.pytest]
 minversion = "9.0"
