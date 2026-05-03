@@ -2,14 +2,14 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.37.1
+    rev: 0.37.2
     hooks:
       - id: check-github-workflows
         stages: [pre-commit]
       - id: check-dependabot
         stages: [pre-commit]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.8
+    rev: v0.15.12
     hooks:
       - id: ruff-check
         args: [--fix]
