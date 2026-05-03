@@ -129,6 +129,7 @@ def patch_mkv_track(monkeypatch: pytest.MonkeyPatch):
         if not Path(file_path).is_file():
             raise FileNotFoundError(f'"{file_path}" does not exist')
         self._file_path = file_path
+        self.mkvmerge_path = None  # pyright: ignore[reportAttributeAccessIssue]
         self._track_codec = None
         self._track_type = "subtitles"
         self._track_id = 0
