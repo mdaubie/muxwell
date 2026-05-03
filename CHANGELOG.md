@@ -1,3 +1,17 @@
+## v0.9.0 (2026-05-03)
+
+### Features
+
+- **apply**: ignore case when matching subs (#69)
+
+### Bug Fixes
+
+- **operations**: move operations ordering to engine (#64)
+
+### Tests
+
+- **operations**: cover existing ops (#93)
+
 ## v0.8.0 (2026-03-02)
 
 ### Features
