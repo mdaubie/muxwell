@@ -9,6 +9,11 @@
 
 - **apply**: properly handle errors/warnings (#31)
 
+### Tests
+
+- cover mkv wrapper (#32)
+- add coverage (#29)
+
 ## v0.7.0 (2026-02-08)
 
 ### Features
@@ -22,6 +27,12 @@
 
 - add Python 3.12 support (#25)
 - **apply**: add set/unset default options (#21)
+
+### Tests
+
+- **info**: add info command tests (#24)
+- **apply**: add apply command tests (#23)
+- **core**: setup tests (#22)
 
 ## v0.5.0 (2026-02-05)
 

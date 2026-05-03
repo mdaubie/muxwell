@@ -84,13 +84,14 @@ gpg_sign = true
 
 [tool.commitizen.customize]
 commit_parser = "^(?P<change_type>feat|fix|refactor|perf|docs|style|test|build|ci|chore|revert)(?:\\((?P<scope>[^()\r\n]*)\\)|\\()?(?P<breaking>!)?:\\s(?P<message>.*)?"
-changelog_pattern = "^(feat|fix|refactor|perf|BREAKING CHANGE)(\\(.+\\))?!?:"
+changelog_pattern = "^(feat|fix|refactor|perf|test|BREAKING CHANGE)(\\(.+\\))?!?:"
 change_type_order = [
     "BREAKING CHANGE",
     "Features",
     "Bug Fixes",
     "Refactoring",
     "Performance Improvements",
+    "Tests",
 ]
 
 [tool.commitizen.customize.change_type_map]
@@ -98,6 +99,7 @@ change_type_order = [
 "fix" = "Bug Fixes"
 "refactor" = "Refactoring"
 "perf" = "Performance Improvements"
+"test" = "Tests"
 
 [tool.pytest]
 minversion = "9.0"
