@@ -16,6 +16,7 @@ class TrackInfo:
     name: str | None
     default: bool
     forced: bool
+    filepath: str
 
 
 @dataclass
@@ -48,6 +49,7 @@ class MKVFile(PyMKVFile):
                     name=track.track_name,
                     default=track.default_track or False,
                     forced=track.forced_track or False,
+                    filepath=track.file_path,
                 )
                 for track in self.tracks
             ],
