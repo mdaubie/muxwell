@@ -40,7 +40,7 @@ Changelog = "https://github.com/mdaubie/muxwell/blob/develop/CHANGELOG.md"
 [dependency-groups]
 dev = [
     "black>=26.1.0",
-    "commitizen>=4.12.1",
+    "commitizen>=4.15.0",
     "pyright[nodejs]>=1.1.408",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
