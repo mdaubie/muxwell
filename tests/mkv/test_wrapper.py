@@ -110,3 +110,24 @@ class TestMKVWrapper:
             assert not output_path.exists()
             # Success: input now has muxed content, Error: input unchanged
             assert video.file_path.exists()
+
+    def test_mux_videos_error_displays_bracketed_name(
+        self, tmp_path: Path, mkv_file_builder_error: MKVFileBuilder
+    ):
+        """Bracketed filenames should be shown literally in mux error output."""
+        input_path = tmp_path / "Episode [1080p].mkv"
+        input_path.touch()
+        output_path = tmp_path / "Episode [1080p].tmp.mkv"
+
+        wrapper_console = Console(
+            force_terminal=False, force_jupyter=False, record=True
+        )
+        wrapper = MKVWrapper(wrapper_console)
+        video = mkv_file_builder_error(input_path)
+
+        result = wrapper.mux_videos([(output_path, video)])
+
+        assert result == [1]
+        output = wrapper_console.export_text(styles=False)
+        assert "Episode [1080p].tmp.mkv" in output
+        assert "Simulated muxing error" in output

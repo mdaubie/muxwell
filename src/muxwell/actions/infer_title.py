@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from rich.markup import escape
+
 from muxwell.titles import infer_title
 
 from ..operations import SetTitle
@@ -21,6 +23,6 @@ class InferTitleAction(Action):
                 ops[video] = [SetTitle(title)]
             else:
                 context.console.print(
-                    f"[yellow]Could not infer title for {video.name}[/yellow]"
+                    f"Could not infer title for {escape(video.name)}", style="yellow"
                 )
         return ops

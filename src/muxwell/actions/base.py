@@ -10,6 +10,7 @@ from pathlib import Path
 
 import typer
 from rich.console import Console
+from rich.markup import escape
 
 from ..mkv import MKVWrapper
 from ..operations import Operation
@@ -32,7 +33,9 @@ class ActionContext:
     def video_files(self) -> list[Path]:
         if videos := collect_video_files(self.target, self.recursive):
             return videos
-        self.console.print(f"[yellow]No video files found in {self.target}[/yellow]")
+        self.console.print(
+            f"[yellow]No video files found in {escape(str(self.target))}[/yellow]"
+        )
         raise typer.Exit(0)
 
     @cached_property
@@ -40,7 +43,7 @@ class ActionContext:
         if subtitles := collect_subtitles_files(self.target, self.recursive):
             return subtitles
         self.console.print(
-            f"[yellow]No subtitles files found in {self.target}[/yellow]"
+            f"[yellow]No subtitles files found in {escape(str(self.target))}[/yellow]"
         )
         raise typer.Exit(0)
 

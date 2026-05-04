@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import pytest
 from rich.console import Console
@@ -128,3 +129,24 @@ class TestSubWrapper:
         reloaded_subs = [SubFile(path) for path in subs_files]
         for sub, path in zip(reloaded_subs, subs_files, strict=True):
             assert sub.format == path.suffix[1:]  # Format should match file extension
+
+    def test_save_subtitles_error_displays_bracketed_name(
+        self, tmp_path: Path, wrapper: SubWrapper
+    ):
+        """Bracketed filenames should be shown literally in save error output."""
+        sub_path = tmp_path / "Episode [1080p].srt"
+        sub_path.write_text(
+            "1\n00:00:01,000 --> 00:00:03,000\nFirst subtitle\n", encoding="utf-8"
+        )
+        sub = SubFile(sub_path)
+        sub.save = MagicMock(side_effect=RuntimeError("save failed [disk]"))
+
+        wrapper.console = Console(
+            force_terminal=False, force_jupyter=False, record=True
+        )
+        codes = wrapper.save_subtitles([sub])
+
+        assert codes == [1]
+        output = wrapper.console.export_text(styles=False)
+        assert "Episode [1080p].srt" in output
+        assert "save failed [disk]" in output
