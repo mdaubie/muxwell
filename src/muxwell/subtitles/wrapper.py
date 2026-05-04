@@ -5,6 +5,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from rich.console import Console
+from rich.markup import escape
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
 from .models import SubFile
@@ -26,7 +27,7 @@ class SubWrapper:
         ):
 
             def load_subtitle(file_path: Path) -> SubFile:
-                progress.add_task(f"Loading {file_path.name}...", total=None)
+                progress.add_task(f"Loading {escape(file_path.name)}...", total=None)
                 return _load_subtitle(file_path)
 
             return list(executor.map(load_subtitle, file_paths))
@@ -43,7 +44,7 @@ class SubWrapper:
         ):
 
             def save_subtitle(sub: SubFile) -> int:
-                progress.add_task(f"Saving {sub.path.name}...", total=None)
+                progress.add_task(f"Saving {escape(sub.path.name)}...", total=None)
                 output_path = sub.path.with_suffix(suffix=sub.path.suffix + ".tmp")
                 try:
 
@@ -52,7 +53,9 @@ class SubWrapper:
                     output_path.rename(sub.path)
                     return 0
                 except Exception as e:
-                    self.console.print(f"[red]Error saving {sub.path.name}: {e}[/red]")
+                    self.console.print(
+                        f"[red]Error saving {escape(sub.path.name)}: {escape(str(e))}[/red]"
+                    )
                     output_path.unlink(missing_ok=True)
                     return 1
 

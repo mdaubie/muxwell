@@ -4,6 +4,7 @@ from pathlib import Path
 
 import typer
 from rich.console import Console
+from rich.markup import escape
 
 from ..subtitles import SubWrapper
 from ..utils.files import collect_subtitles_files
@@ -37,13 +38,17 @@ def shift(
     files = collect_subtitles_files(target, recursive)
 
     if not files:
-        console.print(f"[yellow]No subtitle files found in {target}[/yellow]")
+        console.print(
+            f"[yellow]No subtitle files found in {escape(str(target))}[/yellow]"
+        )
         raise typer.Exit(0)
 
     subs = wrapper.load_subtitles(files)
     for sub in subs:
         sub.shift(ms=ms_offset)
-        console.print(f"[green]Shifted {sub.path.name} by {ms_offset} ms[/green]")
+        console.print(
+            f"[green]Shifted {escape(sub.path.name)} by {ms_offset} ms[/green]"
+        )
 
     codes = wrapper.save_subtitles(subs)
     success_count = sum(1 for code in codes if code == 0)

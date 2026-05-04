@@ -4,6 +4,7 @@ from pathlib import Path
 
 import typer
 from rich.console import Console
+from rich.markup import escape
 from rich.table import Table
 
 from ..mkv import MkvInfo, MKVWrapper
@@ -27,7 +28,7 @@ def info(
     files = collect_video_files(target, recursive)
 
     if not files:
-        console.print(f"[yellow]No video files found in {target}[/yellow]")
+        console.print(f"[yellow]No video files found in {escape(str(target))}[/yellow]")
         raise typer.Exit(0)
 
     wrapper = MKVWrapper(console)
@@ -51,5 +52,5 @@ def _print_table(videos: list[MkvInfo]):
                 "Yes" if track.default else "No",
                 "Yes" if track.forced else "No",
             )
-        table.add_row(video.path.name, video.title or "-", tt)
+        table.add_row(escape(video.path.name), video.title or "-", tt)
     console.print(table)

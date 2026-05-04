@@ -34,6 +34,16 @@ class TestInfoCommand:
         assert result.exit_code == 0
         assert "No video files found" in result.stdout
 
+    def test_info_with_bracketed_directory_path(self, tmp_path: Path):
+        """Test info command prints bracketed directory paths literally."""
+        bracketed = tmp_path / "Season [01]"
+        bracketed.mkdir()
+
+        result = runner.invoke(app, ["info", str(bracketed)])
+        assert result.exit_code == 0
+        assert "No video files found" in result.stdout
+        assert "Season [01]" in result.stdout
+
     def test_info_quiet_option(self, tmp_path: Path):
         """Test info command with empty directory and quiet option."""
         result = runner.invoke(app, ["info", str(tmp_path), "--quiet"])

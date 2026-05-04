@@ -8,6 +8,7 @@ import pytest
 from typer.testing import CliRunner
 
 from muxwell.cli.app import app
+from tests.fixtures.files import FileFactory
 
 runner = CliRunner()
 
@@ -151,6 +152,18 @@ class TestShiftCommand:
         result = runner.invoke(app, ["subtitles", "shift", str(tmp_path), "1000"])
         assert result.exit_code == 0
         assert "No subtitle files found" in result.stdout
+
+    def test_shift_displays_bracketed_filename(self, file_factory: FileFactory):
+        """Test that bracketed subtitle filenames are printed literally."""
+        subs = file_factory(
+            ext="srt",
+            name="Episode [1080p]",
+            content=("1\n" "00:00:01,000 --> 00:00:03,000\n" "First subtitle\n"),
+        )
+
+        result = runner.invoke(app, ["subtitles", "shift", str(subs), "1000"])
+        assert result.exit_code == 0
+        assert "Episode [1080p].srt" in result.stdout
 
     def test_shift_quiet_mode(self, subs_file: Path):
         """Test shifting in quiet mode."""

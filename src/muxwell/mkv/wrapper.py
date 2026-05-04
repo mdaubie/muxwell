@@ -7,6 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from rich.console import Console
+from rich.markup import escape
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
 from .models import MKVFile
@@ -31,7 +32,7 @@ class MKVWrapper:
         ):
 
             def load_video(file_path: Path) -> MKVFile:
-                progress.add_task(f"Loading {file_path.name}...", total=None)
+                progress.add_task(f"Loading {escape(file_path.name)}...", total=None)
                 return _load_mkv(file_path)
 
             return list(executor.map(load_video, file_paths))
@@ -45,7 +46,7 @@ class MKVWrapper:
 
             def mux_video(arg: tuple[Path, MKVFile]) -> int:
                 path, video = arg
-                id = progress.add_task(f"Muxing {path.name}...", total=100)
+                id = progress.add_task(f"Muxing {escape(path.name)}...", total=100)
 
                 def progress_handler(progress_value: int):
                     progress.update(id, completed=progress_value)
@@ -59,7 +60,9 @@ class MKVWrapper:
                     path.rename(video.file_path)
                     return 0
                 except ValueError as e:
-                    self.console.print(f"[red]Error muxing {path.name}: {e}[/red]")
+                    self.console.print(
+                        f"[red]Error muxing {escape(path.name)}: {escape(str(e))}[/red]"
+                    )
                     path.unlink(missing_ok=True)
                     return 1
 
