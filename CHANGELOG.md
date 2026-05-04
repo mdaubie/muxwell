@@ -1,3 +1,10 @@
+## v0.9.1 (2026-05-04)
+
+### Bug Fixes
+
+- escape file paths to render potential brackets (#127)
+- **mkv**: include track filepath in change detection (#121)
+
 ## v0.9.0 (2026-05-03)
 
 ### Features
