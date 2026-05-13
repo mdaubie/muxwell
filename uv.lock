@@ -702,7 +702,7 @@ wheels = [
 
 [[package]]
 name = "pymkv2"
-version = "2.3.1"
+version = "2.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "bitmath" },
@@ -710,9 +710,9 @@ dependencies = [
     { name = "python-iso639" },
     { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/92/c0/9a1eb8e884b681a4fc9b31e405676bce7ec073983b45b1e41015512fae38/pymkv2-2.3.1.tar.gz", hash = "sha256:3d89ff5b26776adea28fdcd44b2cbc6fbcb2fa3c53c7461f16fbe1b729500bf6", size = 76023, upload-time = "2026-05-01T18:29:57.988Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c8/85/2aedb77182bb421e695c18ce6686ddf09452bd24c53cf47a6b0f0c0dc21d/pymkv2-2.3.2.tar.gz", hash = "sha256:0da8f3770276e7bfa8293d36e9b0c391681069f3f153b63d1e7f79d76fc00704", size = 78950, upload-time = "2026-05-09T18:49:22.66Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ce/d5/a4ddfa9b3d21eddc89f42a576beefbd7f81eb0b430344b37e296869ad4be/pymkv2-2.3.1-py3-none-any.whl", hash = "sha256:caf13888911d8ef9dde24781350d22a89a8ad7db397f4475848f4c44584debfc", size = 52112, upload-time = "2026-05-01T18:29:59.054Z" },
+    { url = "https://files.pythonhosted.org/packages/f8/4e/d3979a5f1cdbe238e991601097873223492747257425d5fc3f17dd695425/pymkv2-2.3.2-py3-none-any.whl", hash = "sha256:20ef62bc9c3d4ef52d4a4c2b8f5f7987e408c021a11a8f81be3042d5ad689b49", size = 52809, upload-time = "2026-05-09T18:49:23.705Z" },
 ]
 
 [[package]]
