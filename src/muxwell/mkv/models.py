@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import cast
+from typing import Literal, cast
 
 from pymkv import MKVFile as PyMKVFile, MKVTrack as PyMKVTrack
 
@@ -60,9 +60,29 @@ class MKVFile(PyMKVFile):
         """Check if the MKV file was modified."""
         return self.info != self._snapshot
 
-    def select_track(self, track_id: int) -> PyMKVTrack | None:
-        """Get a track by its ID."""
-        try:
-            return cast(PyMKVTrack, self.get_track(track_id))
-        except IndexError:
-            return None
+    def select_track(self, sel: TrackSelector) -> PyMKVTrack | None:
+        """Get a track by its ID or type/lang."""
+        if isinstance(sel, int):
+            try:
+                return cast(PyMKVTrack, self.get_track(sel))
+            except IndexError:
+                return None
+        else:
+            for track in self.tracks:
+                if track.track_type == sel.type and track.language == sel.lang:
+                    return track
+
+
+TrackType = Literal["video", "audio", "subtitles"]
+
+
+@dataclass
+class TypeLangTrackSelector:
+    type: TrackType
+    lang: str
+
+    def __str__(self):
+        return f"{self.type}:{self.lang}"
+
+
+TrackSelector = int | TypeLangTrackSelector

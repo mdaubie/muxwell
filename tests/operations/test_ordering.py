@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from muxwell.mkv.models import TypeLangTrackSelector
 from muxwell.operations import (
     AddSubtitles,
     RemoveTrack,
@@ -18,14 +19,16 @@ def test_operation_sort_orders_by_priority_and_remove_track_descending_id(
         RemoveTrack(0),
         AddSubtitles(tmp_path),
         RemoveTrack(1),
+        RemoveTrack(TypeLangTrackSelector("audio", "eng")),
     ]
 
     ordered = sorted(operations)
 
     assert ordered == [
         operations[2],  # AddSubtitles (priority 10)
-        operations[3],  # RemoveTrack(1) (priority 20, tie-breaker -1)
-        operations[1],  # RemoveTrack(0) (priority 20, tie-breaker 0)
+        operations[3],  # RemoveTrack(1) (priority 20, tie-breaker (0, -1))
+        operations[1],  # RemoveTrack(0) (priority 20, tie-breaker (0, 0))
+        operations[4],  # RemoveTrack(<type>:<lang>) (priority 20, tie-breaker (1,))
         operations[0],  # SetTrackLanguage (priority 30)
     ]
 
