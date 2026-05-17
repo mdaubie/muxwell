@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
+from pytest import MonkeyPatch
 from typer.testing import CliRunner
 
+import muxwell.cli.apply as apply_module
 from muxwell.cli.app import app
 
 runner = CliRunner()
@@ -70,3 +73,37 @@ class TestApplyCommand:
         assert "Title:" in result.stdout
         assert "Test Title" in result.stdout
         assert not Path(f"{video_file}.tmp").exists()
+
+    def test_apply_without_dry_run_executes_plan(
+        self, monkeypatch: MonkeyPatch, tmp_path: Path
+    ) -> None:
+        """Test apply command executes plans when --dry-run is not set."""
+        video_file = tmp_path / "video.mkv"
+        video_file.touch()
+        calls: dict[str, bool] = {"execute": False, "print_plan": False}
+
+        class FakeEngine:
+            def __init__(self, _console: Any) -> None:
+                pass
+
+            def plan(
+                self, _target: Path, _actions: list[Any], _recursive: bool
+            ) -> list[object]:
+                return [object()]
+
+            def print_plan(self, _plans: list[object]) -> None:
+                calls["print_plan"] = True
+
+            def execute(self, _plans: list[object]) -> None:
+                calls["execute"] = True
+
+        monkeypatch.setattr(apply_module, "ProcessingEngine", FakeEngine)
+
+        result = runner.invoke(
+            app,
+            ["apply", str(video_file), "--set-title", "Test Title"],
+        )
+
+        assert result.exit_code == 0, result.stderr
+        assert calls["execute"] is True
+        assert calls["print_plan"] is False
