@@ -57,3 +57,16 @@ class TestApplyCommand:
         result = runner.invoke(app, ["apply", str(video_file)])
         assert result.exit_code == 0
         assert "No changes to apply" in result.stdout
+
+    def test_apply_dry_run_prints_diff_without_muxing(self, video_file: Path):
+        """Test apply command dry-run prints planned changes and skips muxing."""
+        result = runner.invoke(
+            app,
+            ["apply", str(video_file), "--set-title", "Test Title", "--dry-run"],
+        )
+
+        assert result.exit_code == 0, result.stderr
+        assert "Dry run:" in result.stdout
+        assert "Title:" in result.stdout
+        assert "Test Title" in result.stdout
+        assert not Path(f"{video_file}.tmp").exists()
