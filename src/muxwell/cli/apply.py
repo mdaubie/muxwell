@@ -72,6 +72,11 @@ def apply(
         [],
         help="Remove a specific track by its ID. Can be used multiple times.",
     ),
+    dry_run: bool = typer.Option(
+        False,
+        "--dry-run",
+        help="Print planned changes without applying them.",
+    ),
     quiet: bool = QuietOption,
     recursive: bool = RecursiveOption,
 ):
@@ -104,5 +109,8 @@ def apply(
     plans = engine.plan(target, actions, recursive)
     if not plans:
         console.print("[yellow]No changes to apply.[/yellow]")
+        raise typer.Exit(0)
+    if dry_run:
+        engine.print_plan(plans)
         raise typer.Exit(0)
     engine.execute(plans)

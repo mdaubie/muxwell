@@ -56,6 +56,11 @@ class MKVFile(PyMKVFile):
         )
 
     @property
+    def snapshot(self) -> MkvInfo:
+        """Get the original state of the MKV file when it was loaded."""
+        return self._snapshot
+
+    @property
     def changed(self) -> bool:
         """Check if the MKV file was modified."""
         return self.info != self._snapshot
