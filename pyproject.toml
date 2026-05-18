@@ -24,7 +24,7 @@ classifiers = [
 keywords = ["mkv", "mkvtoolnix", "subtitles", "video", "batch", "cli"]
 requires-python = ">=3.10"
 dependencies = [
-    "chardet>=6.0.0,<7",
+    "chardet>=7.4.3,<8",
     "pymkv2>=2.2.0.post1",
     "pysubs2>=1.8.0",
     "rich>=14.3.1",
