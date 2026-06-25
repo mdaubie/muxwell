@@ -21,7 +21,7 @@ repos:
         language_version: python3.13
         stages: [pre-commit]
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.409
+    rev: v1.1.411
     hooks:
       - id: pyright
         stages: [pre-commit]
